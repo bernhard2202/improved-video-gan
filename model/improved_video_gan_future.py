@@ -105,14 +105,14 @@ class ImprovedVideoGANFuture(object):
         self.d_fake, _ = self.discriminator(self.videos_fake, reuse=True)
 
         self.g_cost_pure = -tf.reduce_mean(self.d_fake)
-        self.g_cost = self.g_cost_pure + 1000 * self.gen_reg
+
+        #self.g_cost = self.g_cost_pure + 1000 * self.gen_reg
 
         self.d_cost = tf.reduce_mean(self.d_fake) - tf.reduce_mean(self.d_real)
 
         tf.summary.scalar("g_cost_pure", self.g_cost_pure)
         tf.summary.scalar("g_cost_regularizer", self.gen_reg)
         tf.summary.scalar("d_cost", self.d_cost)
-        tf.summary.scalar("g_cost", self.g_cost)
 
         alpha = tf.random_uniform(
             shape=[self.batch_size, 1],
@@ -140,8 +140,10 @@ class ImprovedVideoGANFuture(object):
         with tf.control_dependencies(tf.get_collection(tf.GraphKeys.UPDATE_OPS)):
             self.d_adam = tf.train.AdamOptimizer(learning_rate=self.learning_rate, beta1=self.beta1, beta2=0.999) \
                 .minimize(self.d_cost_final, var_list=self.discriminator_variables)
-            self.g_adam = tf.train.AdamOptimizer(learning_rate=self.learning_rate, beta1=self.beta1, beta2=0.999) \
-                .minimize(self.g_cost, var_list=self.generator_variables)
+            self.g_adam_gan = tf.train.AdamOptimizer(learning_rate=self.learning_rate, beta1=self.beta1, beta2=0.999) \
+                .minimize(self.g_cost_pure, var_list=self.generator_variables)
+            self.g_adam_first = tf.train.AdamOptimizer(learning_rate=self.learning_rate, beta1=self.beta1, beta2=0.999) \
+                .minimize(self.gen_reg, var_list=self.generator_variables)
 
         self.sample = sampleBatch(self.videos_fake, self.batch_size)
         self.summary_op = tf.summary.merge_all()
@@ -173,15 +175,16 @@ class ImprovedVideoGANFuture(object):
             session.run(self.d_adam, feed_dict=self.get_feed_dict(session))
 
         feed_dict = self.get_feed_dict(session)
-        session.run(self.g_adam, feed_dict=feed_dict)
+        session.run(self.g_adam_gan, feed_dict=feed_dict)
+        session.run(self.g_adam_first, feed_dict=feed_dict)
 
         if log_summary:
-            g_loss_pure, g_reg, g_loss_total, d_loss_val, summary = session.run(
-                [self.g_cost_pure, self.gen_reg, self.g_cost, self.d_cost, self.summary_op],
+            g_loss_pure, g_reg, d_loss_val, summary = session.run(
+                [self.g_cost_pure, self.gen_reg, self.d_cost, self.summary_op],
                 feed_dict=feed_dict)
             summary_writer.add_summary(summary, step)
-            print("Time: %g/itr, Step: %d, generator loss: %g (%g + %g), discriminator_loss: %g" % (
-                time.time() - start_time, step, g_loss_total, g_loss_pure, g_reg, d_loss_val))
+            print("Time: %g/itr, Step: %d, generator loss: (%g + %g), discriminator_loss: %g" % (
+                time.time() - start_time, step, g_loss_pure, g_reg, d_loss_val))
 
         if generate_sample:
             images = session.run(self.videos)[:, 0, :, :, :]

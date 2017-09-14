@@ -66,17 +66,6 @@ for path in [experiment_dir, checkpoint_dir, sample_dir, log_dir]:
     if not os.path.exists(path):
         os.mkdir(path)
 
-with open(os.path.join(experiment_dir, 'hyperparams_{}.txt'.format(i)), 'w+') as f:
-    f.write('general\n')
-    f.write('crop_size: %d\n' % params.crop_size)
-    f.write('frame_count: %d\n' % params.frame_count)
-    f.write('batch_size: %d\n' % params.batch_size)
-    f.write('z_dim: %d\n' % params.z_dim)
-    f.write('\nlearning\n')
-    f.write('learning_rate: %f\n' % params.learning_rate)
-    f.write('beta1 (adam): %f\n' % params.beta1)  # TODO make beta parametrizable in BEGAN as well
-    f.close()
-
 #
 # set up input pipeline
 #
@@ -160,6 +149,21 @@ if params.recover_model:
         raise Exception("no checkpoint found to recover")
 else:
     i = 0
+
+#
+# backup parameter configurations
+#
+with open(os.path.join(experiment_dir, 'hyperparams_{}.txt'.format(i)), 'w+') as f:
+    f.write('general\n')
+    f.write('crop_size: %d\n' % params.crop_size)
+    f.write('frame_count: %d\n' % params.frame_count)
+    f.write('batch_size: %d\n' % params.batch_size)
+    f.write('z_dim: %d\n' % params.z_dim)
+    f.write('\nlearning\n')
+    f.write('learning_rate: %f\n' % params.learning_rate)
+    f.write('beta1 (adam): %f\n' % params.beta1)  # TODO make beta parametrizable in BEGAN as well
+    f.close()
+
 
 #
 # TRAINING

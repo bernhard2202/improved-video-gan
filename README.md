@@ -3,9 +3,9 @@ Towards an Understanding of Our World by GANing Videos in the Wild
 
 Requirements
 ------------
-Tensorflow 1.2.1
-Python 2.7
-ffmpeg
+* Tensorflow 1.2.1
+* Python 2.7
+* ffmpeg
 
 Data
 ----

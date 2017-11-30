@@ -2,6 +2,7 @@ Towards an Understanding of Our World by GANing Videos in the Wild
 ==================================================================
 
 GitHubb repository for "Towards an Understanding of Our World by GANing Videos in the Wild" 
+
 [Paper Link](https://github.com/bernhard2202/improved-video-gan/raw/master/paper/paper.pdf)
 
 

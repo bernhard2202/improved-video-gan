@@ -5,6 +5,8 @@ GitHub repository for "Towards an Understanding of Our World by GANing Videos in
 
 [Paper Link](https://github.com/bernhard2202/improved-video-gan/raw/master/paper/paper.pdf)
 
+[Animated Examples](https://bernhard2202.github.io/)
+
 
 Requirements
 ------------

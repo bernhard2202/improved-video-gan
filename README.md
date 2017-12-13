@@ -5,7 +5,7 @@ GitHub repository for "Towards an Understanding of Our World by GANing Videos in
 
 [Paper Link](https://github.com/bernhard2202/improved-video-gan/raw/master/paper/paper.pdf)
 
-[Animated Examples](https://bernhard2202.github.io/)
+For more information please refer to [our homepage](https://bernhard2202.github.io/).
 
 
 Requirements
@@ -14,10 +14,10 @@ Requirements
 * Python 2.7
 * ffmpeg
 
-Data
-----
-Videos are stored as JPEGs of vertically stacked frames. Every frame needs to be at least 64x64 pixels and contains between 16 and 32 frames. 
-For example datasets see: http://carlvondrick.com/tinyvideo/#data
+Data Format
+-----------
+Videos are stored as JPEGs of vertically stacked frames. Every frame needs to be at least 64x64 pixels; videos contain between 16 and 32 frames. 
+For an example datasets see: http://carlvondrick.com/tinyvideo/#data
 
 
 Training
@@ -36,5 +36,3 @@ Important Parameters:
 * sample_every: generate a visual sample every xx steps.
 * save_model_very: save the model every xx steps.
 * recover_model: if true recover model and continue training
-
-

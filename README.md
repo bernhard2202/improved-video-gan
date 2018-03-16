@@ -1,7 +1,7 @@
-Towards an Understanding of Our World by GANing Videos in the Wild
+Improving Video Generation for Multi-functional Applications
 ==================================================================
 
-GitHub repository for "Towards an Understanding of Our World by GANing Videos in the Wild" 
+GitHub repository for "Improving Video Generation for Multi-functional Applications" 
 
 [Paper Link](https://arxiv.org/abs/1711.11453)
 

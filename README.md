@@ -5,7 +5,7 @@ GitHub repository for "Improving Video Generation for Multi-functional Applicati
 
 [Paper Link](https://arxiv.org/abs/1711.11453)
 
-For more information please refer to [our homepage](https://bernhard2202.github.io/).
+For more information please refer to [our homepage](https://bernhard2202.github.io/ivgan/index.html).
 
 
 Requirements
